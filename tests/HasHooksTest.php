@@ -32,6 +32,21 @@ class HasHooksTest extends TestCase
         $this->assertEquals(2, $subject->count);
     }
 
+    public function test__Given_custom_hookPrefix__When_initializeHooks__Then_hooks_initialized()
+    {
+        $subject = new class {
+            use HasHooks, TestTrait;
+
+            public int $count = 0;
+
+            protected string $hookPrefix = 'customHook';
+        };
+
+        $subject->initializeHooks();
+
+        $this->assertEquals(2, $subject->count);
+    }
+
 }
 
 trait TestTrait
@@ -43,12 +58,22 @@ trait TestTrait
         $this->count++;
     }
 
+    public function customHookTestTrait(): void
+    {
+        $this->count++;
+    }
+
 }
 
 trait TestTraitSub
 {
 
     public function hookTestTraitSub(): void
+    {
+        $this->count++;
+    }
+
+    public function customHookTestTraitSub(): void
     {
         $this->count++;
     }
