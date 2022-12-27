@@ -24,13 +24,25 @@ class MyClass
 You can then define hook methods in your traits by adding methods with a specific naming convention. The method name
 should be prefixed with `hook`, followed by the name of the trait. For example:
 
-```php 
+```php
 trait MyTrait
 {
     public function hookMyTrait()
     {
         // Will be called when the hook is initialized
     }  
+}
+```
+
+Of course, you'll also need to add the trait to your class:
+
+```php
+use JesseGall\Hooks\HasHooks;
+use MyTrait;
+
+class MyClass
+{
+    use HasHooks, MyTrait;
 }
 ```
 
@@ -51,7 +63,7 @@ use JesseGall\Hooks\HasHooks;
 
 class MyClass
 {
-    use HasHooks;
+    use HasHooks, MyTrait;
 
     protected $hookPrefix = 'myHook';
 }
